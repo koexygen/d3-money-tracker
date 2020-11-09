@@ -1,14 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>G's Money Track</title>
-</head>
-<body>
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
 
-<script src="https://d3js.org/d3.v6.min.js"></script>
-<script src="index.js"></script>
-<script src="graph.js"></script>
-</body>
+    <style>
+      input {
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="grey darken-3">
+    <header class="grey section darken-4 z-depth-3">
+      <h2 class="white-text center teal-text text-accent-3">
+        G's Money Tracker
+      </h2>
+    </header>
+
+    <div class="container section">
+      <div class="row">
+        <div class="s12 m6 col">
+          <form class="card darken-4 grey z-depth-3">
+            <div class="card-content">
+              <h3 class="card-title teal-text text-accent-4 center">
+                Add item
+              </h3>
+              <div class="input-field center">
+                <input type="text" id="name" />
+                <label for="name">Expense Name</label>
+              </div>
+              <div class="input-field center">
+                <input type="text" id="cost" />
+                <label for="cost">Item Cost $</label>
+              </div>
+              <div class="input-field center">
+                <button
+                  class="btn-large white-text teal waves-effect waves-light"
+                >
+                  Add Expense
+                </button>
+              </div>
+              <div class="input-field center">
+                <p class="red-text" id="error">Error</p>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="s12 m5 col push-m1">
+          <div class="canvas"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script src="index.js"></script>
+    <script src="graph.js"></script>
+  </body>
 </html>
