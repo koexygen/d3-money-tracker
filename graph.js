@@ -24,7 +24,7 @@ const update = (data) => {
   paths
     .attr("class", "arc")
     .attr("d", arcPath)
-    .attr("stroke", "white")
+    .attr("stroke", (d) => d3.interpolateWarm(Math.random()))
     .attr("stroke-width", 2);
 
   paths
@@ -32,7 +32,7 @@ const update = (data) => {
     .append("path")
     .attr("class", "arc")
     .attr("d", arcPath)
-    .attr("stroke", "white")
+    .attr("stroke", (d) => d3.interpolateWarm(Math.random()))
     .attr("stroke-width", 2);
 };
 
