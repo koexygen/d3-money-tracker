@@ -3,10 +3,36 @@ const name = document.getElementById("name");
 const cost = document.getElementById("cost");
 const error = document.getElementById("error");
 
+function errorStyle(type) {
+  switch (type) {
+    case "success":
+      error.className = "green-text";
+      error.textContent = "Your expense added :)";
+      break;
+    case "NaN":
+      error.className = "red-text";
+      error.textContent = "Cost should be number";
+      cost.value = "";
+      break;
+
+    case "not-filled":
+      error.className = "red-text";
+      error.textContent = "You should fill all information";
+      break;
+    default:
+      break;
+  }
+}
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (name.value && cost.value) {
+    if (isNaN(parseInt(cost.value))) {
+      errorStyle("NaN");
+      return;
+    }
+
     const doc = {
       name: name.value,
       cost: parseInt(cost.value),
@@ -18,11 +44,9 @@ form.addEventListener("submit", (e) => {
         name.value = "";
         cost.value = "";
 
-        error.className = "green-text";
-        error.textContent = "Your expense added :)";
+        errorStyle("success");
       });
   } else {
-    error.className = "red-text";
-    error.textContent = "Please fill information";
+    errorStyle("not-filled");
   }
 });
