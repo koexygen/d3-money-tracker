@@ -23,6 +23,16 @@ const arcPath = d3
 
 const color = d3.scaleOrdinal(d3.schemeAccent);
 
+let defs = svg.append("defs");
+let filter = defs.append("filter").attr("id", "glow");
+filter
+  .append("feGaussianBlur")
+  .attr("stdDeviation", "2.5")
+  .attr("result", "coloredBlur");
+let feMerge = filter.append("feMerge");
+feMerge.append("feMergeNode").attr("in", "coloredBlur");
+feMerge.append("feMergeNode").attr("in", "SourceGraphic");
+
 const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
   color.domain(data.map((x) => x.name));
@@ -44,9 +54,10 @@ const update = (data) => {
     .enter()
     .append("path")
     .attr("class", "arc")
-    .attr("stroke", "#212121")
+    .attr("stroke", "#00000033")
     .attr("stroke-width", 3)
     .attr("fill", (d) => color(d.data.name))
+    .style("filter", "url(#glow)")
     .each(function (d) {
       this.currentData = d;
     })
