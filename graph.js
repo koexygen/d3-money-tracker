@@ -11,7 +11,10 @@ const graph = svg
   .append("g")
   .attr("transform", `translate(${center.x}, ${center.y})`);
 
-const pie = d3.pie().value((d) => d.cost);
+const pie = d3
+  .pie()
+  .value((d) => d.cost)
+  .sort(null);
 
 const arcPath = d3
   .arc()
@@ -31,7 +34,11 @@ const update = (data) => {
     .attrTween("d", arcExitTween)
     .remove();
 
-  paths.attr("d", arcPath);
+  paths
+    .attr("d", arcPath)
+    .transition()
+    .duration(2000)
+    .attrTween("d", arcUpdateTween);
 
   paths
     .enter()
@@ -96,7 +103,7 @@ const arcExitTween = (d) => {
 function arcUpdateTween(d) {
   let itp = d3.interpolate(this.currentData, d);
 
-  this.currentData = itp(1);
+  this.currentData = d;
 
   return function (tick) {
     return arcPath(itp(tick));
