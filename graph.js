@@ -1,4 +1,4 @@
-const dims = { width: 300, height: 300, radius: 150 };
+const dims = { width: 330, height: 330, radius: 165 };
 const center = { x: dims.width / 2 + 5, y: dims.height / 2 + 5 };
 
 const svg = d3
@@ -18,22 +18,32 @@ const arcPath = d3
   .outerRadius(dims.radius)
   .innerRadius(dims.radius / 2);
 
+const color = d3.scaleOrdinal(d3["schemeSet3"]);
+
 const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
+  color.domain(data.map((x) => x.name));
+  paths.exit().remove();
 
   paths
     .attr("class", "arc")
-    .attr("d", arcPath)
-    .attr("stroke", (d) => d3.interpolateWarm(Math.random()))
-    .attr("stroke-width", 2);
+    .attr("stroke", "#424242")
+    .attr("stroke-width", 3)
+    .attr("fill", (d) => color(d.data.name))
+    .transition()
+    .duration(1000)
+    .attrTween("d", arcTween);
 
   paths
     .enter()
     .append("path")
     .attr("class", "arc")
-    .attr("d", arcPath)
-    .attr("stroke", (d) => d3.interpolateWarm(Math.random()))
-    .attr("stroke-width", 2);
+    .attr("stroke", "#424242")
+    .attr("stroke-width", 3)
+    .attr("fill", (d) => color(d.data.name))
+    .transition()
+    .duration(1000)
+    .attrTween("d", arcTween);
 };
 
 let data = [];
@@ -62,3 +72,12 @@ db.collection("expenses").onSnapshot((res) => {
   });
   update(data);
 });
+
+const arcTween = (d) => {
+  const int = d3.interpolate(d.endAngle, d.startAngle);
+
+  return function (tick) {
+    d.startAngle = int(tick);
+    return arcPath(d);
+  };
+};
