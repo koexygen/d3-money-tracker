@@ -21,7 +21,7 @@ const arcPath = d3
   .outerRadius(dims.radius)
   .innerRadius(dims.radius / 2);
 
-const color = d3.scaleOrdinal(d3["schemeSet3"]);
+const color = d3.scaleOrdinal(d3.schemeAccent);
 
 const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
