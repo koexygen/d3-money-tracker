@@ -14,7 +14,8 @@ const graph = svg
 const pie = d3
   .pie()
   .value((d) => d.cost)
-  .sort(null);
+  .sort(null)
+  .padAngle(0.05);
 
 const arcPath = d3
   .arc()
@@ -54,9 +55,10 @@ const update = (data) => {
     .enter()
     .append("path")
     .attr("class", "arc")
-    .attr("stroke", "#00000033")
+    .attr("stroke", (d) => color(d.data.name))
     .attr("stroke-width", 3)
     .attr("fill", (d) => color(d.data.name))
+    .attr("fill-opacity", 0.2)
     .style("filter", "url(#glow)")
     .each(function (d) {
       this.currentData = d;
