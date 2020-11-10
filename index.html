@@ -15,11 +15,6 @@
       }
 
       header {
-        margin-bottom: 70px;
-      }
-
-      .card {
-        max-width: 400px;
       }
     </style>
   </head>
@@ -31,37 +26,31 @@
     </header>
 
     <div class="container section">
-      <div class="row">
-        <div class="s12 m6 col">
-          <form class="card darken-4 grey z-depth-3">
-            <div class="card-content">
-              <h3 class="card-title teal-text text-accent-4 center">
-                Add item
-              </h3>
-              <div class="input-field center">
-                <input type="text" id="name" />
-                <label for="name">Expense Name</label>
-              </div>
-              <div class="input-field center">
-                <input type="text" id="cost" />
-                <label for="cost">Item Cost $</label>
-              </div>
-              <div class="input-field center">
-                <button
-                  class="btn-large white-text teal waves-effect waves-light"
-                >
-                  Add Expense
-                </button>
-              </div>
-              <div class="input-field center">
-                <p class="red-text" id="error"></p>
-              </div>
+      <div class="s12 m6 col">
+        <form class="card darken-4 grey z-depth-3">
+          <div class="card-content">
+            <h3 class="card-title teal-text text-accent-4 center">Add item</h3>
+            <div class="input-field center">
+              <input type="text" id="name" />
+              <label for="name">Expense Name</label>
             </div>
-          </form>
-        </div>
-        <div class="s12 m5 col push-m1">
-          <div class="canvas"></div>
-        </div>
+            <div class="input-field center">
+              <input type="text" id="cost" />
+              <label for="cost">Item Cost $</label>
+            </div>
+            <div class="input-field center">
+              <button
+                class="btn-large white-text teal waves-effect waves-light"
+              >
+                Add Expense
+              </button>
+            </div>
+            <div class="input-field center">
+              <p class="red-text" id="error"></p>
+            </div>
+          </div>
+          <div class="canvas center"></div>
+        </form>
       </div>
     </div>
 

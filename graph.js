@@ -1,11 +1,11 @@
-const dims = { width: 330, height: 330, radius: 165 };
-const center = { x: dims.width / 2 + 5, y: dims.height / 2 + 5 };
+const dims = { width: 400, height: 400, radius: 200 };
+const center = { x: dims.width / 2, y: dims.height / 2 };
 
 const svg = d3
   .select(".canvas")
   .append("svg")
-  .attr("width", dims.width + 50)
-  .attr("height", dims.height + 50);
+  .attr("width", dims.width + 5)
+  .attr("height", dims.height + 5);
 
 const graph = svg
   .append("g")
