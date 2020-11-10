@@ -40,6 +40,9 @@ const update = (data) => {
     .attr("stroke", "#212121")
     .attr("stroke-width", 3)
     .attr("fill", (d) => color(d.data.name))
+    .each(function (d) {
+      this.currentData = d;
+    })
     .transition()
     .duration(2000)
     .attrTween("d", arcEnterTween);
@@ -73,7 +76,7 @@ db.collection("expenses").onSnapshot((res) => {
 });
 
 const arcEnterTween = (d) => {
-  const int = d3.interpolate(d.endAngle, d.startAngle);
+  let int = d3.interpolate(d.endAngle, d.startAngle);
 
   return function (tick) {
     d.startAngle = int(tick);
@@ -82,10 +85,20 @@ const arcEnterTween = (d) => {
 };
 
 const arcExitTween = (d) => {
-  const int = d3.interpolate(d.startAngle, d.endAngle);
+  let int = d3.interpolate(d.startAngle, d.endAngle);
 
   return function (tick) {
     d.startAngle = int(tick);
     return arcPath(d);
   };
 };
+
+function arcUpdateTween(d) {
+  let itp = d3.interpolate(this.currentData, d);
+
+  this.currentData = itp(1);
+
+  return function (tick) {
+    return arcPath(itp(tick));
+  };
+}
