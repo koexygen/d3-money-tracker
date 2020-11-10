@@ -14,22 +14,42 @@
         color: white;
       }
 
-      header {
+      .add-expense {
+        background-color: rgba(38, 166, 154, 0.1);
+        border: 1px solid #26a69a;
+        color: #26a69a !important;
+      }
+      .add-expense:hover {
+        background-color: #2bbbad47;
+      }
+
+      .title {
+        color: #2bbbade6 !important;
+        text-shadow: 0 0 3px #2bbbad;
+      }
+
+      .add-item {
+        color: #26a69a !important;
+        text-shadow: 0 0 3px #212121;
+        margin: 0;
+      }
+
+      input {
+        border-bottom: 1px solid #28a69a !important;
+        color: #26a69a !important;
       }
     </style>
   </head>
   <body class="grey darken-3">
     <header class="grey section darken-4 z-depth-3">
-      <h2 class="white-text center teal-text text-accent-3">
-        G's Money Tracker
-      </h2>
+      <h2 class="title center">G's Money Tracker</h2>
     </header>
 
     <div class="container section">
       <div class="s12 m6 col">
         <form class="card darken-4 grey z-depth-3">
           <div class="card-content">
-            <h3 class="card-title teal-text text-accent-4 center">Add item</h3>
+            <h3 class="card-title add-item center">Add item</h3>
             <div class="input-field center">
               <input type="text" id="name" />
               <label for="name">Expense Name</label>
@@ -39,9 +59,7 @@
               <label for="cost">Item Cost $</label>
             </div>
             <div class="input-field center">
-              <button
-                class="btn-large white-text teal waves-effect waves-light"
-              >
+              <button class="btn-large add-expense waves-effect waves-light">
                 Add Expense
               </button>
             </div>
