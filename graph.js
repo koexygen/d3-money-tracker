@@ -23,16 +23,15 @@ const color = d3.scaleOrdinal(d3["schemeSet3"]);
 const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
   color.domain(data.map((x) => x.name));
-  paths.exit().remove();
 
   paths
-    .attr("class", "arc")
-    .attr("stroke", "#424242")
-    .attr("stroke-width", 3)
-    .attr("fill", (d) => color(d.data.name))
+    .exit()
     .transition()
-    .duration(1000)
-    .attrTween("d", arcTween);
+    .duration(2000)
+    .attrTween("d", arcExitTween)
+    .remove();
+
+  paths.attr("d", arcPath);
 
   paths
     .enter()
@@ -42,8 +41,8 @@ const update = (data) => {
     .attr("stroke-width", 3)
     .attr("fill", (d) => color(d.data.name))
     .transition()
-    .duration(1000)
-    .attrTween("d", arcTween);
+    .duration(2000)
+    .attrTween("d", arcEnterTween);
 };
 
 let data = [];
@@ -73,8 +72,17 @@ db.collection("expenses").onSnapshot((res) => {
   update(data);
 });
 
-const arcTween = (d) => {
+const arcEnterTween = (d) => {
   const int = d3.interpolate(d.endAngle, d.startAngle);
+
+  return function (tick) {
+    d.startAngle = int(tick);
+    return arcPath(d);
+  };
+};
+
+const arcExitTween = (d) => {
+  const int = d3.interpolate(d.startAngle, d.endAngle);
 
   return function (tick) {
     d.startAngle = int(tick);
