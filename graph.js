@@ -1,11 +1,11 @@
 const dims = { width: 400, height: 400, radius: 200 };
-const center = { x: dims.width / 2, y: dims.height / 2 };
+const center = { x: dims.width / 2 + 10, y: dims.height / 2 + 10 };
 
 const svg = d3
   .select(".canvas")
   .append("svg")
-  .attr("width", dims.width + 5)
-  .attr("height", dims.height + 5);
+  .attr("width", dims.width + 25)
+  .attr("height", dims.height + 25);
 
 const graph = svg
   .append("g")
@@ -37,7 +37,7 @@ const update = (data) => {
     .enter()
     .append("path")
     .attr("class", "arc")
-    .attr("stroke", "#424242")
+    .attr("stroke", "#212121")
     .attr("stroke-width", 3)
     .attr("fill", (d) => color(d.data.name))
     .transition()
