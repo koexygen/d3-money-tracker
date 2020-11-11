@@ -50,10 +50,6 @@ const update = (data) => {
 
   legendsList
     .selectAll("circle")
-    .attr("opacity", 0)
-    .transition()
-    .duration(2000)
-    .attr("opacity", 1)
     .attr("stroke", (d) => color(d))
     .attr("stroke-width", 1)
     .attr("fill", (d) => color(d))
@@ -62,9 +58,6 @@ const update = (data) => {
 
   legendsList
     .selectAll("text")
-    .attr("opacity", 0)
-    .transition()
-    .duration(2000)
     .attr("opacity", 1)
     .attr("fill", (d) => color(d))
     .style("filter", "url(#glow)");
@@ -87,7 +80,7 @@ const update = (data) => {
     .append("path")
     .attr("class", "arc")
     .attr("stroke", (d) => color(d.data.name))
-    .attr("stroke-width", 3)
+    .attr("stroke-width", 2)
     .attr("fill", (d) => color(d.data.name))
     .attr("fill-opacity", 0.2)
     .style("filter", "url(#glow)")
@@ -160,8 +153,10 @@ function arcUpdateTween(d) {
 }
 
 //events
+let hoveredArc = false;
 
 function handleMouseOver(e, d) {
+  hoveredArc = true;
   //pie scale
   d3.select(this)
     .transition("hover")
@@ -177,6 +172,7 @@ function handleMouseOver(e, d) {
 }
 
 function handleMouseOut(e, d) {
+  hoveredArc = false;
   d3.select(this)
     .transition("hover")
     .duration(800)
