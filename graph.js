@@ -164,7 +164,8 @@ function handleMouseOver(e, d) {
     .filter((i) => i === d.data.name)
     .transition()
     .duration(400)
-    .attr("fill-opacity", 1);
+    .attr("fill-opacity", 1)
+    .attr("transform", "scale(1.1)");
 }
 
 function handleMouseOut(e, d) {
@@ -176,7 +177,8 @@ function handleMouseOut(e, d) {
   //  legend light
   d3.selectAll("circle")
     .filter((i) => i === d.data.name)
-    .transition()
+    .transition("hover")
     .duration(800)
-    .attr("fill-opacity", 0.2);
+    .attr("fill-opacity", 0.2)
+    .attr("transform", "scale(1)");
 }
