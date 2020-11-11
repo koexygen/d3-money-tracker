@@ -15,7 +15,7 @@ const pie = d3
   .pie()
   .value((d) => d.cost)
   .sort(null)
-  .padAngle(0.05);
+  .padAngle(0.04);
 
 const arcPath = d3
   .arc()
@@ -153,10 +153,8 @@ function arcUpdateTween(d) {
 }
 
 //events
-let hoveredArc = false;
 
 function handleMouseOver(e, d) {
-  hoveredArc = true;
   //pie scale
   d3.select(this)
     .transition("hover")
@@ -172,7 +170,6 @@ function handleMouseOver(e, d) {
 }
 
 function handleMouseOut(e, d) {
-  hoveredArc = false;
   d3.select(this)
     .transition("hover")
     .duration(800)
