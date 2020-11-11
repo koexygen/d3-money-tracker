@@ -29,7 +29,7 @@ const legendGroup = svg
   .append("g")
   .attr("transform", `translate(${dims.width + 30}, -100)`);
 
-const legend = d3.legendColor().shape("circle").scale(color);
+const legend = d3.legendColor().shape("circle").scale(color).shapePadding(5);
 
 let defs = svg.append("defs");
 let filter = defs.append("filter").attr("id", "glow");
