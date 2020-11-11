@@ -22,9 +22,10 @@ const arcPath = d3
   .outerRadius(dims.radius)
   .innerRadius(dims.radius / 2);
 
-const color = d3.scaleOrdinal(d3.schemeAccent);
+const color = d3.scaleOrdinal(d3.schemeSet3);
 
 //legends
+let legendsList;
 const legendGroup = svg
   .append("g")
   .attr("transform", `translate(${dims.width + 30}, -100)`);
@@ -45,7 +46,7 @@ const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
   color.domain(data.map((x) => x.name));
 
-  let legendsList = legendGroup.call(legend);
+  legendsList = legendGroup.call(legend);
 
   legendsList
     .selectAll("circle")
@@ -88,6 +89,11 @@ const update = (data) => {
     .transition()
     .duration(2000)
     .attrTween("d", arcEnterTween);
+
+  graph
+    .selectAll("path")
+    .on("mouseover", handleMouseOver)
+    .on("mouseout", handleMouseOut);
 };
 
 let data = [];
@@ -143,4 +149,34 @@ function arcUpdateTween(d) {
   return function (tick) {
     return arcPath(itp(tick));
   };
+}
+
+//events
+
+function handleMouseOver(e, d) {
+  //pie scale
+  d3.select(this)
+    .transition("hover")
+    .duration(400)
+    .attr("transform", "scale(1.10)");
+  //  legend light
+  d3.selectAll("circle")
+    .filter((i) => i === d.data.name)
+    .transition()
+    .duration(400)
+    .attr("fill-opacity", 1);
+}
+
+function handleMouseOut(e, d) {
+  d3.select(this)
+    .transition("hover")
+    .duration(800)
+    .attr("transform", "scale(1)");
+
+  //  legend light
+  d3.selectAll("circle")
+    .filter((i) => i === d.data.name)
+    .transition()
+    .duration(800)
+    .attr("fill-opacity", 0.2);
 }
