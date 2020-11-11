@@ -165,7 +165,7 @@ function handleMouseOver(e, d) {
     .transition()
     .duration(400)
     .attr("fill-opacity", 1)
-    .attr("transform", "scale(1.1)");
+    .attr("transform", "scale(1.1) translate(5,0)");
 }
 
 function handleMouseOut(e, d) {
@@ -180,5 +180,5 @@ function handleMouseOut(e, d) {
     .transition("hover")
     .duration(800)
     .attr("fill-opacity", 0.2)
-    .attr("transform", "scale(1)");
+    .attr("transform", "");
 }
