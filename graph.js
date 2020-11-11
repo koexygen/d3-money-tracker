@@ -24,6 +24,13 @@ const arcPath = d3
 
 const color = d3.scaleOrdinal(d3.schemeAccent);
 
+//legends
+const legendGroup = svg
+  .append("g")
+  .attr("transform", `translate(${dims.width + 30}, -100)`);
+
+const legend = d3.legendColor().shape("circle").scale(color);
+
 let defs = svg.append("defs");
 let filter = defs.append("filter").attr("id", "glow");
 filter
@@ -37,6 +44,21 @@ feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
   color.domain(data.map((x) => x.name));
+
+  let legendsList = legendGroup.call(legend);
+
+  legendsList
+    .selectAll("circle")
+    .attr("stroke", (d) => color(d))
+    .attr("stroke-width", 1)
+    .attr("fill", (d) => color(d))
+    .attr("fill-opacity", 0.2)
+    .style("filter", "url(#glow)");
+
+  legendsList
+    .selectAll("text")
+    .attr("fill", (d) => color(d))
+    .style("filter", "url(#glow)");
 
   paths
     .exit()
