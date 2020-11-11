@@ -94,7 +94,8 @@ const update = (data) => {
   graph
     .selectAll("path")
     .on("mouseover", handleMouseOver)
-    .on("mouseout", handleMouseOut);
+    .on("mouseout", handleMouseOut)
+    .on("click", handleClick);
 };
 
 let data = [];
@@ -183,3 +184,8 @@ function handleMouseOut(e, d) {
     .attr("fill-opacity", 0.2)
     .attr("transform", "");
 }
+
+const handleClick = (e, d) => {
+  const id = d.data.id;
+  db.collection("expenses").doc(id).delete();
+};
