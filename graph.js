@@ -50,6 +50,10 @@ const update = (data) => {
 
   legendsList
     .selectAll("circle")
+    .attr("opacity", 0)
+    .transition()
+    .duration(2000)
+    .attr("opacity", 1)
     .attr("stroke", (d) => color(d))
     .attr("stroke-width", 1)
     .attr("fill", (d) => color(d))
@@ -58,6 +62,10 @@ const update = (data) => {
 
   legendsList
     .selectAll("text")
+    .attr("opacity", 0)
+    .transition()
+    .duration(2000)
+    .attr("opacity", 1)
     .attr("fill", (d) => color(d))
     .style("filter", "url(#glow)");
 
@@ -162,7 +170,7 @@ function handleMouseOver(e, d) {
   //  legend light
   d3.selectAll("circle")
     .filter((i) => i === d.data.name)
-    .transition()
+    .transition("circle")
     .duration(400)
     .attr("fill-opacity", 1)
     .attr("transform", "scale(1.1) translate(5,0)");
@@ -177,7 +185,7 @@ function handleMouseOut(e, d) {
   //  legend light
   d3.selectAll("circle")
     .filter((i) => i === d.data.name)
-    .transition("hover")
+    .transition("circle")
     .duration(800)
     .attr("fill-opacity", 0.2)
     .attr("transform", "");
