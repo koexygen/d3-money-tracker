@@ -105,6 +105,16 @@ const update = (data) => {
 
   graph
     .selectAll("path")
+    .on("mouseout", (e, d) => {
+      tip.style("visibility", "hidden");
+      handleMouseOut(e, d);
+    })
+    .on("mousemove", (e, d) => {
+      tip.style(
+        "transform",
+        `translate(${e.clientX + 20}px,${e.clientY - 100}px)`
+      );
+    })
     .on("mouseover", (e, d) => {
       let currColor = color(d.data.name);
       let tooltip = `<div class="name">${d.data.name}</div>`;
@@ -125,13 +135,6 @@ const update = (data) => {
            0 8px 10px -7px ${currColor}`
         );
       handleMouseOver(e, d);
-    })
-    .on("mouseout", (e, d) => {
-      tip.style("visibility", "hidden");
-      handleMouseOut(e, d);
-    })
-    .on("mousemove", (e, d) => {
-      tip.style("transform", `translate(${e.clientX}px,${e.clientY - 100}px)`);
     })
     .on("click", handleClick);
 };
