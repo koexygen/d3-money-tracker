@@ -1,2 +1,4 @@
 # d3-money-tracker
-basic money tracker pie chart project
+Fancy and beautiful, animated D3 Pie Chart with realtime updates
+
+Live Url: https://koexygen.github.io/d3-money-tracker/
