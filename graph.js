@@ -42,6 +42,18 @@ let feMerge = filter.append("feMerge");
 feMerge.append("feMergeNode").attr("in", "coloredBlur");
 feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
+//tooltip
+
+const tip = d3
+  .select("body")
+  .append("div")
+  .attr("class", "card tooltip center")
+  .style("padding", "8px")
+  .style("position", "absolute")
+  .style("left", 0)
+  .style("top", 0)
+  .style("visibility", "hidden");
+
 const update = (data) => {
   const paths = graph.selectAll("path").data(pie(data));
   color.domain(data.map((x) => x.name));
@@ -93,8 +105,34 @@ const update = (data) => {
 
   graph
     .selectAll("path")
-    .on("mouseover", handleMouseOver)
-    .on("mouseout", handleMouseOut)
+    .on("mouseover", (e, d) => {
+      let currColor = color(d.data.name);
+      let tooltip = `<div class="name">${d.data.name}</div>`;
+      tooltip += `<div class="cost">$${d.data.cost}</div>`;
+      tooltip += `<div class="delete">Click slice to delete</div>`;
+      tip
+        .html(tooltip)
+        .transition("tooltip")
+        .duration(300)
+        .style("visibility", "visible")
+        .style("background-color", currColor + "33")
+        .style("color", currColor)
+        .style("border", `1px solid ${currColor}`)
+        .style(
+          "box-shadow",
+          `0px 0px 10px 2px ${currColor}33,
+           0px 6px 20px 5px ${currColor}33, 
+           0 8px 10px -7px ${currColor}`
+        );
+      handleMouseOver(e, d);
+    })
+    .on("mouseout", (e, d) => {
+      tip.style("visibility", "hidden");
+      handleMouseOut(e, d);
+    })
+    .on("mousemove", (e, d) => {
+      tip.style("transform", `translate(${e.clientX}px,${e.clientY - 100}px)`);
+    })
     .on("click", handleClick);
 };
 
@@ -155,9 +193,9 @@ function arcUpdateTween(d) {
 
 //events
 
-function handleMouseOver(e, d) {
+const handleMouseOver = (e, d) => {
   //pie scale
-  d3.select(this)
+  d3.select(e.target)
     .transition("hover")
     .duration(400)
     .attr("transform", "scale(1.10)");
@@ -168,10 +206,10 @@ function handleMouseOver(e, d) {
     .duration(400)
     .attr("fill-opacity", 1)
     .attr("transform", "scale(1.1) translate(5,0)");
-}
+};
 
-function handleMouseOut(e, d) {
-  d3.select(this)
+const handleMouseOut = (e, d) => {
+  d3.select(e.target)
     .transition("hover")
     .duration(800)
     .attr("transform", "scale(1)");
@@ -183,7 +221,7 @@ function handleMouseOut(e, d) {
     .duration(800)
     .attr("fill-opacity", 0.2)
     .attr("transform", "");
-}
+};
 
 const handleClick = (e, d) => {
   const id = d.data.id;
